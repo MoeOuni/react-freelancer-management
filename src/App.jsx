@@ -1,27 +1,40 @@
 import { useContext, useEffect } from "react";
+import { ConfigProvider } from "antd";
 import AppContext from "./context/AppContext";
 import UserContext from "./context/UserContext";
+import { Route, Routes } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
+import Todos from "./pages/Todos";
+import Notes from "./pages/Notes";
+import Time from "./pages/Time";
+import Projects from "./pages/Projects";
+import Settings from "./pages/Settings";
+import Calendar from "./pages/Calendar";
 
 function App() {
   const { theme } = useContext(AppContext);
   const { user } = useContext(UserContext);
 
-  useEffect(() => {
-    console.log("theme : " + theme);
-    console.log("user : " + user);
-  }, []);
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: "#052047",
+          colorInfo: "#052047",
+        },
       }}
     >
-      <h4 style={{ textAlign: "center" }}>React Freelancer Management.</h4>
-    </div>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route path="/todos" element={<Todos />} />
+          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/notes" element={<Notes />} />
+          <Route path="/time" element={<Time />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/settings" element={<Settings />} />
+        </Route>
+      </Routes>
+    </ConfigProvider>
   );
 }
 
